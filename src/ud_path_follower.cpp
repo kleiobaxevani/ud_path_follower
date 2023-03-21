@@ -247,8 +247,8 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
         if (this->m_dynamics_mode == PathFollower::DynamicsMode::UD_OCEANS23_follower) {
             ros::NodeHandle nh;
 
-            simu_data = nh.subscribe("/echo/mavros/global_position/raw/gps_vel", 10, &PathFollower::Save_Data_Callback, this);
-
+//            simu_data = nh.subscribe("/echo/mavros/global_position/raw/gps_vel", 10, &PathFollower::Save_Data_Callback, this);
+            simu_data = nh.subscribe("/ben/project11/odom", 10, &PathFollower::Save_Data_Callback, this);
             p11::AngleRadians target_heading = curr_seg_azi;
 
             //p11::AngleRadians theta = -p11::AngleRadiansZeroCentered(target_heading - heading).value();
@@ -263,8 +263,8 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
 //            nh.getParam("prop_gain_w", pw_gain); // Proportional gain on the yaw direction
 
             
-            double r = 1.8752285;//0.01285; //Ricatti parameter (r>0)
-            double px_gain = 100.78;
+            double r = 0.8752285;//0.01285; //Ricatti parameter (r>0)
+            double px_gain = 1.78;
             double pw_gain = 20.055;
 
             double v_d = 2.0; // Desired linear velocity of the vehicle
@@ -291,9 +291,11 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
                            - 1 / delta * acc_y + 2 * cos(heading) * sin(heading) * this->sensor_vely * this->sensor_velw /
                                                  delta; // Angular acceleration around z axis
 
-            cmd_vel.linear.x = 1*(prev_sensor_velx + acc_x*dt + px_gain*(a-acc_x)*pow(dt,2.0));
+            //cmd_vel.linear.x = 1*(prev_sensor_velx + acc_x*dt + px_gain*(a-acc_x)*pow(dt,2.0));
+            cmd_vel.linear.x = 2.0;
+            cmd_vel.angular.z = 0.0;
             cmd_vel.linear.y = 0.0;
-            cmd_vel.angular.z = 1*(prev_sensor_velw + acc_w*dt + pw_gain*(alpha-acc_w)*pow(dt,2.0));
+//            cmd_vel.angular.z = 1*(prev_sensor_velw + acc_w*dt + pw_gain*(alpha-acc_w)*pow(dt,2.0));
 
             ROS_WARN_STREAM( "Linear" << cmd_vel.linear.x << '\n');
             ROS_WARN_STREAM("Angular" << cmd_vel.angular.z << '\n');
