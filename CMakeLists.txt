@@ -30,6 +30,10 @@ add_library(ud_path_follower_nav_plugin src/ud_path_follower.cpp src/ud_path_fol
 add_dependencies(ud_path_follower_nav_plugin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ud_path_follower_nav_plugin ${catkin_LIBRARIES})
 
+#add_executable(${PROJECT_NAME}_node src/ud_path_follower.cpp)
+#add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})
+
 
 install(TARGETS  ud_path_follower_nav_plugin
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
@@ -45,4 +49,5 @@ PATTERN ".svn" EXCLUDE
 install(FILES ud_path_follower_nav_plugin.xml
  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
 

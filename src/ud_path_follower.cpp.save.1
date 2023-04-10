@@ -250,11 +250,9 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
         if (this->m_dynamics_mode == PathFollower::DynamicsMode::UD_OCEANS23_follower) {
             ros::NodeHandle nh;
 
-            simu_data = nh.subscribe("/echo/sensors/posmv/velocity", 10, &PathFollower::Save_Data_Callback, this);
-//            simu_data = nh.subscribe("/echo/mavros/global_position/raw/gps_vel", 10, &PathFollower::Save_Data_Callback, this);
+            simu_data = nh.subscribe("/echo/mavros/global_position/raw/gps_v", 10, &PathFollower::Save_Data_Callback, this);
 //            simu_data = nh.subscribe("/ben/project11/odom", 10, &PathFollower::Save_Data_Callback, this);
-//          simu_data = nh.subscribe("/echo/project11/odom",10, &PathFollower::Save_Data_Callback, this);  
-          p11::AngleRadians target_heading = curr_seg_azi;
+            p11::AngleRadians target_heading = curr_seg_azi;
 
             //p11::AngleRadians theta = -p11::AngleRadiansZeroCentered(target_heading - heading).value();
             p11::AngleRadians theta = p11::AngleRadiansZeroCentered(target_heading - heading).value();
@@ -262,17 +260,15 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
 
             this->m_current_y = m_cross_track_error;
 
-//            double r, px_gain, pw_gain;
+//			  double r, px_gain, pw_gain;
 //            nh.getParam("ricatti_param", r); //Ricatti parameter (r>0)
 //            nh.getParam("prop_gain_x", px_gain); // Proportional gain on the surge direction
 //            nh.getParam("prop_gain_w", pw_gain); // Proportional gain on the yaw direction
 
-            // last field work's values r=0.2875, px=100, pw=30 with mavros_gps_vel
-            // last field work's values r=1.7875, px=180, pw=20 with posmv
-            //simulation values that work well r=0.8752285, px=100.78, pw=20.055
-            double r = 1.7875;//1.5;//0.8752285;//0.01285; //Ricatti parameter (r>0)
-            double px_gain = 180.78;//0.78;//1.78;
-            double pw_gain = 20.055;//20.055;
+            
+            double r = 1.5;//0.8752285;//0.01285; //Ricatti parameter (r>0)
+            double px_gain = 0.78;//1.78;
+            double pw_gain = 100.055;//20.055;
 
             double v_d = 2.0; // Desired linear velocity of the vehicle
             double dt = 0.1; // TimerCallback runs every 0.01 secs
@@ -336,11 +332,11 @@ void PathFollower::Save_Data_Callback(const nav_msgs::Odometry::ConstPtr &messag
     std::ofstream vel_w;
 
 
-    vel_x.open("velx_udPF_data.txt", std::ios_base::app);//std::ios_base::app
+    vel_x.open("velx_data.txt", std::ios_base::app);//std::ios_base::app
     vel_x << sensor_velx << "  " << time(0) << "\n";
-    vel_y.open("vely_udPF_data.txt", std::ios_base::app);//std::ios_base::app
+    vel_y.open("vely_data.txt", std::ios_base::app);//std::ios_base::app
     vel_y << sensor_vely << "  " << time(0) << "\n";
-    vel_w.open("velw_udPF_data.txt", std::ios_base::app);//std::ios_base::app
+    vel_w.open("velw_data.txt", std::ios_base::app);//std::ios_base::app
     vel_w << sensor_velw << "  " << time(0) << "\n";
 
 }
@@ -470,14 +466,5 @@ void PathFollower::sendDisplay(bool dim) {
     } else
         this->display_pub_.publish(this->vis_display_);
 }
-
-int main(int argc, char **argv)
-    {
-        ros::init(argc, argv, "ud_path_follower");
-
-        ros::spin();
-
-        return 0;
-    }
 
 } // namespace ud_path_follower

@@ -1,13 +1,13 @@
 /** 
- * @file path_follower_node.h
+ * @file ud_path_follower_node.h
  * 
  * Discription goes here.
  * 
  * Local ROS Parameters:
  *  - map_frame: 
  *  - base_frame: 
- *  - dynamics_mode: str: one of "unicycle" or "holonomic".  
- *      Default is "unicycle"
+ *  - dynamics_mode: str: one of UD_OCEANS23_follower
+ *      Default is "UD_OCEANS23_follower"
  * 
  * TODO: Create header file and organize private/public attributes.
  * 
@@ -19,8 +19,8 @@
  * 
  *
  */
-#ifndef UD_PATH_FOLLOWER_H_
-#define UD_PATH_FOLLOWER_H_
+#ifndef UD_PATH_FOLLOWER_NODE_H_
+#define UD_PATH_FOLLOWER_NODE_H_
 
 #include <vector>
 #include <cmath>
@@ -49,7 +49,7 @@ public:
 
   //Baxevani
   //void Prev_cmd_vel_Callback(const geometry_msgs::TwistStamped::ConstPtr& message);
-  void Save_Data_Callback(const geometry_msgs::TwistStamped::ConstPtr& message);
+  void Save_Data_Callback(const nav_msgs::Odometry::ConstPtr &message);
   //void Prev_sensor_data_Callback(const nav_msgs::Odometry::ConstPtr& message);
 
 protected:
@@ -70,7 +70,7 @@ protected:
 private:
 
   // Dynamics mode
-  enum DynamicsMode { unicycle, holonomic, UD_path_follower, UD_OCEANS23_follower };
+  enum DynamicsMode {UD_OCEANS23_follower };
   DynamicsMode m_dynamics_mode;
 
   /**
