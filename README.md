@@ -1,7 +1,7 @@
 # Minimum Acceleration Path Follower for ASVs
 
-This path follower controller was designed to improve multibeam sonar data captured by an Autonomous Surface Vessel. The complete analysis can be found in "K. Baxevani, G. E. Otto, A. C. Trembanis, H. G. Tanner, Optimal ASV Path-Following for Improved Marine Survey Data Quality, *OCEANS Conference*, 2023 (in print)".
-Link to paper: https://www.researchgate.net/publication/370875486_Optimal_ASV_Path-Following_for_Improved_Marine_Survey_Data_Quality 
+This path follower controller was designed to improve multibeam sonar data captured by an Autonomous Surface Vessel. The complete analysis can be found in "K. Baxevani, G. E. Otto, A. C. Trembanis, H. G. Tanner, Optimal ASV Path-Following for Improved Marine Survey Data Quality, *OCEANS Conference*, pp. 1-7, 2023".
+Link to paper: [https://www.researchgate.net/publication/370875486_Optimal_ASV_Path-Following_for_Improved_Marine_Survey_Data_Quality](https://ieeexplore.ieee.org/abstract/document/10244725) 
 Link to field-testing video: https://www.youtube.com/watch?v=GDPKTioIDkU
 
 Installation Guide
